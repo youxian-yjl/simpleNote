@@ -1,0 +1,625 @@
+/* 重置和基础样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background-color: #f5f5f5;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 头部样式 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.logo i {
+  font-size: 1.8rem;
+}
+
+.search-box {
+  flex: 1;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 25px;
+  padding: 8px 15px;
+  margin: 0 20px;
+}
+
+.search-box i {
+  color: #667eea;
+  margin-right: 10px;
+}
+
+.search-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #333;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#toggleTheme {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+#toggleTheme:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 主内容区 - 三栏布局 */
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* 左侧分类栏 */
+.categories-sidebar {
+  width: 250px;
+  background: white;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.sidebar-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #667eea;
+}
+
+.add-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: #667eea;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-btn:hover {
+  background: #5a67d8;
+}
+
+.category-list {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.category-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-item:hover {
+  background: #f8f9fa;
+}
+
+.category-item.active {
+  background: #eef2ff;
+  border-left: 4px solid #667eea;
+  font-weight: bold;
+}
+
+.category-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.category-actions {
+  display: flex;
+  gap: 5px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.category-item:hover .category-actions {
+  opacity: 1;
+}
+
+.category-actions button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 3px;
+}
+
+.edit-category {
+  color: #667eea;
+}
+
+.delete-category {
+  color: #e53e3e;
+}
+
+.stats {
+  padding: 15px 20px;
+  border-top: 1px solid #e0e0e0;
+  background: #f8f9fa;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* 中间笔记列表栏 */
+.notes-list-section {
+  flex: 1;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.list-actions {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s;
+}
+
+/* 在按钮样式部分添加 */
+.success-btn {
+  background: #48bb78;
+  color: white;
+}
+
+.success-btn:hover {
+  background: #38a169;
+}
+
+/* 回收站样式 */
+.note-item.deleted {
+  opacity: 0.7;
+  border-left-color: #e53e3e;
+  background: linear-gradient(45deg, transparent 95%, #fc8181 95%);
+}
+
+.note-item.deleted:hover {
+  background: linear-gradient(45deg, #fed7d7 95%, #fc8181 95%);
+}
+
+/* 回收站信息 */
+.recycle-info {
+  padding: 10px 15px;
+  background: #fff5f5;
+  border-left: 4px solid #fc8181;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.dark-theme .recycle-info {
+  background: #4a1c1c;
+  color: #fed7d7;
+}
+
+.primary-btn {
+  background: #667eea;
+  color: white;
+}
+
+.primary-btn:hover {
+  background: #5a67d8;
+}
+
+.secondary-btn {
+  background: #e2e8f0;
+  color: #4a5568;
+}
+
+.secondary-btn:hover {
+  background: #cbd5e0;
+}
+
+.danger-btn {
+  background: #fc8181;
+  color: white;
+}
+
+.danger-btn:hover {
+  background: #f56565;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.notes-list-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.notes-list {
+  list-style: none;
+}
+
+.note-item {
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.note-item:hover {
+  background: #eef2ff;
+  transform: translateX(2px);
+}
+
+.note-item.selected {
+  background: #e6fffa;
+  border-left-color: #38b2ac;
+}
+
+.note-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.note-title {
+  font-weight: bold;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.note-date {
+  font-size: 0.8rem;
+  color: #718096;
+}
+
+.note-preview {
+  color: #4a5568;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #718096;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+/* 右侧笔记编辑器 */
+.note-editor-section {
+  width: 450px;
+  background: white;
+  border-left: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.editor-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #4a5568;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 200px;
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  min-height: 20px;
+}
+
+.note-info {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+/* 底部样式 */
+.footer {
+  padding: 10px 20px;
+  background: white;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+  color: #718096;
+  font-size: 0.85rem;
+}
+
+/* 模态框样式 */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #718096;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .note-editor-section {
+      width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+      flex-direction: column;
+  }
+  
+  .categories-sidebar {
+      width: 100%;
+      height: 200px;
+  }
+  
+  .notes-list-section,
+  .note-editor-section {
+      width: 100%;
+      height: calc(50vh - 100px);
+  }
+  
+  .header {
+      flex-wrap: wrap;
+  }
+  
+  .search-box {
+      order: 3;
+      flex: 0 0 100%;
+      margin: 10px 0 0 0;
+  }
+}
+
+/* 深色主题 */
+body.dark-theme {
+  background-color: #1a202c;
+  color: #e2e8f0;
+}
+
+.dark-theme .categories-sidebar,
+.dark-theme .notes-list-section,
+.dark-theme .note-editor-section,
+.dark-theme .modal-content {
+  background-color: #2d3748;
+  color: #e2e8f0;
+}
+
+.dark-theme .category-item:hover,
+.dark-theme .note-item:hover {
+  background-color: #4a5568;
+}
+
+.dark-theme .form-group input,
+.dark-theme .form-group textarea,
+.dark-theme .search-box {
+  background-color: #4a5568;
+  color: #e2e8f0;
+  border-color: #718096;
+}
+
+.dark-theme .note-info,
+.dark-theme .stats {
+  background-color: #4a5568;
+}
+
+.dark-theme .sidebar-header,
+.dark-theme .list-header,
+.dark-theme .editor-header,
+.dark-theme .modal-header {
+  border-bottom-color: #4a5568;
+}
+
+.dark-theme .footer {
+  background-color: #2d3748;
+  border-top-color: #4a5568;
+}
