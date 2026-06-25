@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>笔记管理系统</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部搜索栏 -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-book"></i>
+                <span>笔记管理系统</span>
+            </div>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="搜索笔记标题或内容...">
+            </div>
+            <div class="user-info">
+                <span id="currentTime"></span>
+                <button id="toggleTheme" title="切换主题">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- 主要内容区 - 三栏布局 -->
+        <main class="main-content">
+            <!-- 左侧 - 笔记分类栏 -->
+            <aside class="categories-sidebar">
+                <div class="sidebar-header">
+                    <h3><i class="fas fa-folder"></i> 笔记分类</h3>
+                    <button id="addCategory" class="add-btn" title="添加分类">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <ul id="categoryList" class="category-list">
+                    <!-- 分类列表将通过JS动态生成 -->
+                </ul>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span>笔记总数:</span>
+                        <span id="totalNotes">0</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 中间 - 笔记列表栏 -->
+            <section class="notes-list-section">
+                <div class="list-header">
+                    <h3 id="currentCategory">全部笔记</h3>
+                    <!-- 在 .list-actions 中添加 -->
+                    <div class="list-actions">
+                        <button id="addNote" class="primary-btn">
+                            <i class="fas fa-plus"></i> 新建笔记
+                        </button>
+                        <button id="moveNote" class="secondary-btn" disabled>
+                            <i class="fas fa-arrow-right"></i> 移动笔记
+                        </button>
+                        <button id="restoreNote" class="success-btn" disabled>
+                            <i class="fas fa-undo"></i> 恢复笔记
+                        </button>
+                        <button id="deleteSelected" class="danger-btn" disabled>
+                            <i class="fas fa-trash"></i> 
+                            <span id="deleteText">删除</span>
+                        </button>
+                        <button id="emptyRecycleBin" class="danger-btn" style="display: none;">
+                            <i class="fas fa-broom"></i> 清空回收站
+                        </button>
+                    </div>
+                </div>
+                <div class="notes-list-container">
+                    <ul id="notesList" class="notes-list">
+                        <!-- 笔记列表将通过JS动态生成 -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 右侧 - 笔记编辑栏 -->
+            <section class="note-editor-section">
+                <div class="editor-header">
+                    <h3>笔记编辑器</h3>
+                    <div class="editor-actions">
+                        <button id="saveNote" class="primary-btn" disabled>
+                            <i class="fas fa-save"></i> 保存
+                        </button>
+                        <button id="cancelEdit" class="secondary-btn" disabled>
+                            取消
+                        </button>
+                    </div>
+                </div>
+                <div class="editor-content">
+                    <div class="form-group">
+                        <label for="noteTitle">标题:</label>
+                        <input type="text" id="noteTitle" placeholder="请输入笔记标题..." maxlength="100">
+                        <div class="error-message" id="titleError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="noteContent">内容:</label>
+                        <textarea id="noteContent" placeholder="请输入笔记内容..." rows="15"></textarea>
+                        <div class="error-message" id="contentError"></div>
+                    </div>
+                    <div class="note-info">
+                        <div class="info-item">
+                            <span>创建时间:</span>
+                            <span id="createdTime">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span>最后修改:</span>
+                            <span id="modifiedTime">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span>字数:</span>
+                            <span id="wordCount">0</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部信息栏 -->
+        <footer class="footer">
+            <p>© 2024 笔记管理系统 | 使用 localStorage 存储数据 | 已保存 <span id="savedCount">0</span> 条笔记</p>
+        </footer>
+    </div>
+
+    <!-- 模态框 - 添加/编辑分类 -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">添加新分类</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="categoryName">分类名称:</label>
+                    <input type="text" id="categoryName" placeholder="请输入分类名称..." maxlength="50">
+                    <div class="error-message" id="categoryError"></div>
+                </div>
+                <div class="modal-actions">
+                    <button id="confirmCategory" class="primary-btn">确认</button>
+                    <button id="cancelCategory" class="secondary-btn">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框 - 移动笔记 -->
+    <div id="moveModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>移动笔记到</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="targetCategory">选择目标分类:</label>
+                    <select id="targetCategory">
+                        <!-- 分类选项将通过JS动态生成 -->
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button id="confirmMove" class="primary-btn">移动</button>
+                    <button id="cancelMove" class="secondary-btn">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
