@@ -87,7 +87,3 @@ note/
 ## 浏览器兼容性
 
 支持所有现代浏览器（Chrome、Firefox、Safari、Edge）。
-
-## 许可证
-
-MIT License
